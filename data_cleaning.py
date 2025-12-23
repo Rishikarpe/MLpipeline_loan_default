@@ -7,8 +7,14 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     # -----------------------------
     # Handle Missing Values
     # -----------------------------
-    df["person_emp_length"].fillna(df["person_emp_length"].median(), inplace=True)
-    df["loan_int_rate"].fillna(df["loan_int_rate"].median(), inplace=True)
+    df["person_emp_length"] = df["person_emp_length"].fillna(
+        df["person_emp_length"].median()
+    )
+
+    df["loan_int_rate"] = df["loan_int_rate"].fillna(
+        df["loan_int_rate"].median()
+    )
+
 
     # -----------------------------
     # Binary Encoding
@@ -33,8 +39,12 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("data/loan_data.csv")
+    df = pd.read_csv("data/credit_risk_dataset.csv")
     cleaned_df = clean_data(df)
+
+    # Save cleaned dataset
+    cleaned_df.to_csv("data/cleaned_credit_risk_dataset.csv", index=False)
+    print("Cleaned dataset saved to data/cleaned_credit_risk_dataset.csv")
 
     print(cleaned_df.head())
     print(cleaned_df.info())
